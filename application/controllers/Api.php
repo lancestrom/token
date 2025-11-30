@@ -4,23 +4,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Api extends CI_Controller
 {
 
-    public function cek_token()
+    public function check_token()
     {
-        $token_input = $this->input->post('token');
+        header("Content-Type: application/json");
 
-        // ambil token dari database
-        $db_token = $this->db->get_where('token_keluar', ['id' => 1])->row()->token;
+        $token = $this->input->get('token');
 
-        if ($token_input == $db_token) {
-            echo json_encode([
-                "success" => true,
-                "message" => "Token benar"
-            ]);
+        $query = $this->db->get_where('token_keluar', ['token' => $token]);
+
+        if ($query->num_rows() > 0) {
+            echo json_encode(["status" => "success"]);
         } else {
-            echo json_encode([
-                "success" => false,
-                "message" => "Token salah"
-            ]);
+            echo json_encode(["status" => "failed"]);
         }
     }
 }
