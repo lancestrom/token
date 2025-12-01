@@ -10,7 +10,7 @@ class Api extends CI_Controller
 
         $token = $this->input->get('token');
 
-        $query = $this->db->get_where('token_keluar', ['token' => $token]);
+        $query = $this->db->get_where('token_keluar', ['token_keluar' => $token]);
 
         if ($query->num_rows() > 0) {
             echo json_encode(["status" => "success"]);
